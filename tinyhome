@@ -2,6 +2,7 @@
 
 title=tinyhome
 configfile="${1:-config.csv}"
+this_server_ip_address="$(hostname -I | awk '{print $1}')"
 
 get_element(){
     echo "${2}" | cut -d',' -f${1} | xargs
@@ -20,6 +21,11 @@ itemize(){
     elif [ "${category}" = 'item' ]; then
         url="$(get_element '4-' "${line}")"
         echo "<a class='card' href='${url}'><i class='fas fa-${icon}'></i>${name}</a>"
+    elif [ "${category}" = 'localitem' ]; then
+        url="$(get_element '4-' "${line}")"
+        echo "<a class='card' href='http://${this_server_ip_address}${url}'><i class='fas fa-${icon}'></i>${name}</a>"
+    elif [ "${category}" = 'newline' ]; then
+        echo "<br/>"
     fi
 }
 

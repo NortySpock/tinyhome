@@ -1,0 +1,24 @@
+# Docker Compose YAML file for lighttpd
+
+# build with:
+# $ sudo docker-compose build
+
+# start with:
+# $ sudo docker-compose up
+
+# after start, enter shell with:
+# $ sudo docker exec -it lighttpddocker_lighttpd_1 ash
+
+version: "2.4"
+
+services:
+    lighttpd:
+        build: .
+        container_name: lobby_of_home_server_services
+        mem_limit: 100m
+        ports:
+            - "1234:80"
+        volumes:
+            - "./web:/var/www/localhost/htdocs/"
+        restart: unless-stopped
+
